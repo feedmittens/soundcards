@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISA Sound Card Catalog — 1987–2000</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=VT323&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --phosphor: #00ff88;
+    --phosphor-dim: #007a42;
+    --phosphor-glow: rgba(0,255,136,0.25);
+    --amber: #ffb000;
+    --amber-dim: #7a5300;
+    --bg: #060a07;
+    --panel: #0a110d;
+    --panel-border: #0d2016;
+    --text: #b0f0cc;
+    --text-dim: #4a7a60;
+    --danger: #ff4444;
+    --link: #00ccff;
+    --link-hover: #ffffff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Scanline overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.15) 2px,
+      rgba(0,0,0,0.15) 4px
+    );
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  /* CRT curvature vignette */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.6) 100%);
+    pointer-events: none;
+    z-index: 998;
+  }
+
+  /* === HEADER === */
+  header {
+    padding: 48px 40px 32px;
+    border-bottom: 1px solid var(--phosphor-dim);
+    position: relative;
+  }
+
+  .header-bar {
+    font-family: 'VT323', monospace;
+    font-size: 11px;
+    color: var(--phosphor-dim);
+    letter-spacing: 0.2em;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(24px, 4vw, 48px);
+    font-weight: 900;
+    color: var(--phosphor);
+    text-shadow:
+      0 0 10px var(--phosphor-glow),
+      0 0 30px var(--phosphor-glow),
+      0 0 60px rgba(0,255,136,0.1);
+    letter-spacing: 0.05em;
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+
+  .subtitle {
+    font-family: 'Share Tech Mono', monospace;
+    color: var(--amber);
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    margin-bottom: 24px;
+  }
+
+  .intro {
+    max-width: 760px;
+    color: var(--text-dim);
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  .intro a { color: var(--link); text-decoration: none; }
+  .intro a:hover { color: var(--link-hover); text-decoration: underline; }
+
+  /* === CONTROLS === */
+  .controls {
+    padding: 20px 40px;
+    background: var(--panel);
+    border-bottom: 1px solid var(--panel-border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .search-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 220px;
+    max-width: 420px;
+  }
+
+  .search-wrap::before {
+    content: '▶';
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--phosphor-dim);
+    font-size: 10px;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--phosphor-dim);
+    color: var(--phosphor);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 14px;
+    padding: 8px 12px 8px 28px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  input[type="text"]:focus {
+    border-color: var(--phosphor);
+    box-shadow: 0 0 8px var(--phosphor-glow);
+  }
+
+  input[type="text"]::placeholder { color: var(--text-dim); }
+
+  select {
+    background: var(--bg);
+    border: 1px solid var(--phosphor-dim);
+    color: var(--phosphor);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 13px;
+    padding: 8px 12px;
+    cursor: pointer;
+    outline: none;
+    -webkit-appearance: none;
+  }
+
+  select:focus { border-color: var(--phosphor); }
+
+  .count-display {
+    margin-left: auto;
+    color: var(--text-dim);
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .count-display span { color: var(--phosphor); font-weight: bold; }
+
+  /* === LEGEND === */
+  .legend {
+    padding: 10px 40px;
+    background: var(--panel);
+    border-bottom: 1px solid var(--panel-border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+
+  .badge {
+    display: inline-block;
+    padding: 1px 6px;
+    font-size: 10px;
+    font-family: 'Share Tech Mono', monospace;
+    border: 1px solid;
+    border-radius: 2px;
+    white-space: nowrap;
+    text-decoration: none;
+    transition: all 0.15s;
+    margin: 1px;
+  }
+
+  .badge-wp  { color: #aad4f5; border-color: #2a5a80; background: rgba(42,90,128,0.2); }
+  .badge-vg  { color: #f5d48a; border-color: #806020; background: rgba(128,96,32,0.2); }
+  .badge-dd  { color: #b0e0b0; border-color: #305030; background: rgba(48,80,48,0.2); }
+  .badge-kr  { color: #e0b0e0; border-color: #603060; background: rgba(96,48,96,0.2); }
+  .badge-osd { color: #f5a88a; border-color: #803020; background: rgba(128,48,32,0.2); }
+  .badge-vgw { color: #ffe0a0; border-color: #805000; background: rgba(128,80,0,0.2); }
+
+  .badge:hover { opacity: 1; filter: brightness(1.3); transform: translateY(-1px); }
+
+  /* === MAIN GRID === */
+  main {
+    padding: 24px 40px 60px;
+  }
+
+  .manufacturer-section {
+    margin-bottom: 40px;
+  }
+
+  .mfr-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--panel-border);
+  }
+
+  .mfr-name {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--amber);
+    text-shadow: 0 0 8px rgba(255,176,0,0.3);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .mfr-count {
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
+  /* Card table */
+  .card-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .card-table tr {
+    border-bottom: 1px solid rgba(13,32,22,0.8);
+    transition: background 0.1s;
+  }
+
+  .card-table tr:hover {
+    background: rgba(0,255,136,0.04);
+  }
+
+  .card-table td {
+    padding: 8px 10px;
+    vertical-align: middle;
+  }
+
+  .card-name {
+    color: var(--phosphor);
+    font-weight: bold;
+    font-size: 13px;
+    min-width: 240px;
+  }
+
+  .card-year {
+    color: var(--amber);
+    font-size: 12px;
+    white-space: nowrap;
+    min-width: 50px;
+  }
+
+  .card-chip {
+    color: var(--text-dim);
+    font-size: 11px;
+    min-width: 160px;
+    max-width: 240px;
+  }
+
+  .card-compat {
+    color: #5a9a75;
+    font-size: 11px;
+    min-width: 160px;
+  }
+
+  .card-links {
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  /* No results */
+  .no-results {
+    padding: 60px;
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 18px;
+    display: none;
+  }
+
+  /* === FOOTER === */
+  footer {
+    padding: 24px 40px;
+    border-top: 1px solid var(--panel-border);
+    color: var(--text-dim);
+    font-size: 11px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  footer a { color: var(--link); text-decoration: none; }
+  footer a:hover { color: var(--link-hover); }
+
+  /* Blinking cursor */
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+  .cursor { display: inline-block; animation: blink 1s steps(1) infinite; }
+
+  /* Fade-in for sections */
+  @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+  .manufacturer-section { animation: fadeIn 0.4s ease both; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    header, .controls, .legend, main, footer { padding-left: 16px; padding-right: 16px; }
+    .card-chip, .card-compat { display: none; }
+    .card-name { min-width: unset; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-bar">
+    <span>ISA BUS // 8-BIT &amp; 16-BIT AUDIO EXPANSION CARDS</span>
+    <span id="datestamp">SYS DATE: 2026-05-11</span>
+  </div>
+  <h1>ISA SOUND CARD CATALOG<span class="cursor">_</span></h1>
+  <p class="subtitle">// INDUSTRY STANDARD ARCHITECTURE · 1987–2000 · PC AUDIO REFERENCE</p>
+  <p class="intro">
+    A comprehensive reference catalog of ISA bus sound cards from the DOS/early Windows era. Covering FM synthesis, wavetable, digital audio, and MIDI expansion cards for the IBM PC and compatibles. Links to Wikipedia, <a href="https://www.vogons.org" target="_blank">VOGONS</a>, <a href="https://www.dosdays.co.uk" target="_blank">DOS Days</a>, <a href="https://www.karlsitretro.com" target="_blank">Karl's IT Retro</a>, and other reference materials. Source list credit: <a href="http://www.oldschooldaw.com/forums/index.php?topic=674.0" target="_blank">OldSchoolDAW Forums</a>.
+  </p>
+</header>
+
+<div class="controls">
+  <div class="search-wrap">
+    <input type="text" id="search" placeholder="Search cards, chips, standards..." autocomplete="off">
+  </div>
+  <select id="mfr-filter">
+    <option value="">All Manufacturers</option>
+  </select>
+  <select id="era-filter">
+    <option value="">All Eras</option>
+    <option value="early">Early Era (1987–1991)</option>
+    <option value="mid">Mid Era (1992–1995)</option>
+    <option value="late">Late Era (1996–2000)</option>
+    <option value="unknown">Year Unknown</option>
+  </select>
+  <div class="count-display">Showing <span id="visible-count">—</span> cards</div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><span class="badge badge-wp">WP</span> Wikipedia</div>
+  <div class="legend-item"><span class="badge badge-vg">VG</span> VOGONS Forum</div>
+  <div class="legend-item"><span class="badge badge-vgw">VGW</span> VOGONS Wiki</div>
+  <div class="legend-item"><span class="badge badge-dd">DD</span> DOS Days</div>
+  <div class="legend-item"><span class="badge badge-kr">KR</span> Karl's IT Retro</div>
+  <div class="legend-item"><span class="badge badge-osd">OSD</span> OldSchoolDAW</div>
+</div>
+
+<main id="main-content">
+<div class="no-results" id="no-results">NO CARDS MATCH YOUR SEARCH CRITERIA<span class="cursor">_</span></div>
+</main>
+
+<footer>
+  <span>ISA SOUND CARD CATALOG // Reference compilation from multiple community sources</span>
+  <span>
+    <a href="https://www.vogons.org" target="_blank">VOGONS</a> ·
+    <a href="https://www.dosdays.co.uk" target="_blank">DOS Days</a> ·
+    <a href="https://www.karlsitretro.com/isa-sound-card-museum/" target="_blank">Karl's IT Retro Museum</a> ·
+    <a href="http://www.oldschooldaw.com" target="_blank">OldSchoolDAW</a>
+  </span>
+</footer>
+
+<script>
+// ============================================================
+// DATA: [name, year (or ''), chip/tech, compatibility, {links}]
+// Link keys: wp, vg, vgw, dd, kr, osd
+// Era buckets: early=1987-1991, mid=1992-1995, late=1996-2000
+// ============================================================
+
+const CARDS = [
+
+  // ── ADLIB ────────────────────────────────────────────────
+  { mfr: "AdLib", name: "Music Synthesizer Card", year: 1987, chip: "Yamaha YM3812 (OPL2)", compat: "AdLib", links: {
+    wp: "https://en.wikipedia.org/wiki/Ad_Lib_(sound_card)",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/adlib.php",
+    vgw: "https://www.vogons.org/wiki/AdLib_Music_Synthesizer_Card"
+  }},
+  { mfr: "AdLib", name: "Gold 1000", year: 1992, chip: "Yamaha YMF262 (OPL3) + HSPG", compat: "AdLib, WSS, SB Pro", links: {
+    wp: "https://en.wikipedia.org/wiki/Ad_Lib_(sound_card)#Ad_Lib_Gold",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/adlib.php#Gold1000",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "AdLib", name: "MSC16 PnP", year: 1996, chip: "Crystal CS4236-KQ", compat: "AdLib, SB, SB16, WSS", links: {
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/adlib.php#MSC16"
+  }},
+
+  // ── ADVANCED GRAVIS ──────────────────────────────────────
+  { mfr: "Advanced Gravis", name: "Ultrasound (GUS Classic)", year: 1992, chip: "Interwave GF1", compat: "GUS, MIDI", links: {
+    wp: "https://en.wikipedia.org/wiki/Gravis_Ultrasound",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/gravis.php",
+    vg: "https://www.vogons.org/viewtopic.php?t=51762",
+    kr: "https://www.karlsitretro.com/gravis-utrasound-review/"
+  }},
+  { mfr: "Advanced Gravis", name: "Ultrasound CD3", year: 1993, chip: "Interwave GF1", compat: "GUS, MIDI, CD-ROM", links: {
+    wp: "https://en.wikipedia.org/wiki/Gravis_Ultrasound",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/gravis.php",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Advanced Gravis", name: "Ultrasound PnP", year: 1994, chip: "AMD InterWave", compat: "GUS, WSS, SB Pro", links: {
+    wp: "https://en.wikipedia.org/wiki/Gravis_Ultrasound",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/gravis.php",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Advanced Gravis", name: "Ultrasound Extreme", year: 1995, chip: "AMD InterWave + OPL3", compat: "GUS, WSS, SB Pro, OPL3", links: {
+    wp: "https://en.wikipedia.org/wiki/Gravis_Ultrasound",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/gravis.php",
+    kr: "https://www.karlsitretro.com/gravis-ultrasound-extreme-review/"
+  }},
+  { mfr: "Advanced Gravis", name: "Primax SoundStorm Wave", year: 1995, chip: "AMD InterWave", compat: "GUS, WSS", links: {
+    kr: "https://www.karlsitretro.com/primax-soundstorm-wave-review/"
+  }},
+
+  // ── ANCHOR ELECTRONICS ────────────────────────────────────
+  { mfr: "Anchor Electronics", name: "Media Concept 2.0", year: "", chip: "Unknown", compat: "SB16", links: {
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+
+  // ── AVANCE LOGIC ─────────────────────────────────────────
+  { mfr: "Avance Logic", name: "MA5ASOUND ALS100", year: 1993, chip: "ALS100 + LS262 (OPL3 clone)", compat: "AdLib, SB, SB16", links: {
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/avancelogic.php#ALS100",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Avance Logic", name: "PRO16/32PNP+", year: 1995, chip: "ALS120", compat: "AdLib, SB, SB16, WSS", links: {
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+
+  // ── AZTECH ───────────────────────────────────────────────
+  { mfr: "Aztech Labs", name: "Sound Galaxy NX", year: 1992, chip: "OPTi 82C929", compat: "AdLib, SB Pro", links: {
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/aztech.php",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Aztech Labs", name: "Sound Galaxy NX Pro (I38-MMSD802)", year: 1993, chip: "OPTi 82C929", compat: "AdLib, SB Pro, WSS, Covox, DSS", links: {
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/aztech.php#NXPro"
+  }},
+  { mfr: "Aztech Labs", name: "Sound Galaxy NX Pro Extra (I38-MMSN812)", year: 1993, chip: "OPTi 82C929", compat: "AdLib, SB Pro, WSS", links: {
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/aztech.php#NXPro"
+  }},
+  { mfr: "Aztech Labs", name: "Sound Galaxy Nova 16 Extra (I38-MMSN811)", year: 1994, chip: "Aztech base chip", compat: "AdLib, SB Pro", links: {
+    dd: "https://www.dosdays.co.uk/topics/retro_review_mmsn811_pt1.php"
+  }},
+  { mfr: "Aztech Labs", name: "Sound Galaxy Pro 16 II", year: 1993, chip: "OPL3 compatible", compat: "AdLib, SB Pro, WSS", links: {
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/aztech.php",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Aztech Labs", name: "Sound Galaxy Multimedia Pro 16 (I38-MMSD845)", year: 1994, chip: "Aztech AZT2316", compat: "AdLib, SB Pro II, WSS", links: {
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/aztech.php#MPro16"
+  }},
+  { mfr: "Aztech Labs", name: "Sound Galaxy Nova 16 Extra II-3D (I38-MMSN846)", year: 1994, chip: "Aztech AZT2316", compat: "AdLib, SB Pro II, WSS", links: {
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/aztech.php#Nova16II3D"
+  }},
+  { mfr: "Aztech Labs", name: "Sound Galaxy Waverider Pro 32-3D", year: 1995, chip: "ESS ES1868 + OPL3", compat: "AdLib, SB16, WSS", links: {
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Aztech Labs", name: "Multimedia Pro 16 IIIS+ PNP", year: 1996, chip: "AZT2316A", compat: "AdLib, SB16, WSS", links: {
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+
+  // ── BTC ──────────────────────────────────────────────────
+  { mfr: "BTC", name: "BTC-1831 ES1688F", year: 1995, chip: "ESS ES1688F", compat: "AdLib, SB, SB16", links: {
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+
+  // ── BOCA RESEARCH ────────────────────────────────────────
+  { mfr: "Boca Research", name: "SoundExpression SE34SRS", year: 1995, chip: "ESS + SRS 3D", compat: "SB16, WSS", links: {
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+
+  // ── COMPAQ ───────────────────────────────────────────────
+  { mfr: "Compaq", name: "W-INK1 Rev 2 ES1869F (Business Wavetable)", year: 1996, chip: "ESS ES1869F + ES692S wavetable", compat: "SB16, WSS, GM MIDI", links: {
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+
+  // ── CREATIVE LABS ────────────────────────────────────────
+  { mfr: "Creative Labs", name: "Creative Music System / Game Blaster", year: 1987, chip: "2× Philips SAA1099", compat: "CMS/Game Blaster", links: {
+    wp: "https://en.wikipedia.org/wiki/Creative_Music_System",
+    vg: "https://www.vogons.org/viewtopic.php?t=63867",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/creative_cms.php"
+  }},
+  { mfr: "Creative Labs", name: "Sound Blaster 1.0 (CT1320)", year: 1989, chip: "CMS SAA1099 + Yamaha YM3812 (OPL2)", compat: "AdLib, SB", links: {
+    wp: "https://en.wikipedia.org/wiki/Sound_Blaster",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/sb_sbpro.php",
+    vgw: "https://www.vogons.org/wiki/Sound_Blaster"
+  }},
+  { mfr: "Creative Labs", name: "Sound Blaster 1.5 (CT1320C)", year: 1990, chip: "Yamaha YM3812 (OPL2)", compat: "AdLib, SB", links: {
+    wp: "https://en.wikipedia.org/wiki/Sound_Blaster",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/sb_sbpro.php"
+  }},
+  { mfr: "Creative Labs", name: "Sound Blaster 2.0 (CT1350)", year: 1991, chip: "Yamaha YM3812 (OPL2)", compat: "AdLib, SB", links: {
+    wp: "https://en.wikipedia.org/wiki/Sound_Blaster",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/sb_sbpro.php"
+  }},
+  { mfr: "Creative Labs", name: "Sound Blaster Pro 1.0 (CT1320)", year: 1991, chip: "2× Yamaha YM3812 (dual OPL2)", compat: "AdLib, SB, SB Pro", links: {
+    wp: "https://en.wikipedia.org/wiki/Sound_Blaster_Pro",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/sb_sbpro.php"
+  }},
+  { mfr: "Creative Labs", name: "Sound Blaster Pro 2 (CT1600)", year: 1991, chip: "Yamaha YMF262 (OPL3)", compat: "AdLib, SB, SB Pro", links: {
+    wp: "https://en.wikipedia.org/wiki/Sound_Blaster_Pro",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/sb_sbpro.php",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Creative Labs", name: "Sound Blaster 16 (CT1740)", year: 1992, chip: "Vibra 16 + Yamaha YMF262 (OPL3)", compat: "AdLib, SB, SB16", links: {
+    wp: "https://en.wikipedia.org/wiki/Sound_Blaster_16",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/sb16.php",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Creative Labs", name: "Sound Blaster 16 SCSI-2 (CT1770)", year: 1992, chip: "Vibra 16 + OPL3 + SCSI-2", compat: "AdLib, SB, SB16", links: {
+    wp: "https://en.wikipedia.org/wiki/Sound_Blaster_16",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/sb16.php",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Creative Labs", name: "Sound Blaster 16 (CT2230)", year: 1993, chip: "Vibra 16 + OPL3", compat: "AdLib, SB, SB16", links: {
+    wp: "https://en.wikipedia.org/wiki/Sound_Blaster_16",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/sb16.php",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Creative Labs", name: "Sound Blaster 16 ASP (CT2230)", year: 1993, chip: "Vibra 16 + OPL3 + ASP chip", compat: "AdLib, SB, SB16", links: {
+    wp: "https://en.wikipedia.org/wiki/Sound_Blaster_16",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/sb16.php",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Creative Labs", name: "Sound Blaster Pro 2 Mitsumi (CT2600)", year: 1993, chip: "OPL3", compat: "AdLib, SB, SB Pro", links: {
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/sb_sbpro.php",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Creative Labs", name: "Sound Blaster VIBRA 16 (CT2260)", year: 1993, chip: "CT2502 ViBRA 16 + CQM/OPL3", compat: "AdLib, SB, SB16", links: {
+    wp: "https://en.wikipedia.org/wiki/Sound_Blaster_16",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Creative Labs", name: "Sound Blaster AWE32 (CT2760)", year: 1994, chip: "CSP/ASP + EMU8000 wavetable + OPL3", compat: "AdLib, SB, SB16, GS MIDI", links: {
+    wp: "https://en.wikipedia.org/wiki/Sound_Blaster_AWE32",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/sbawe.php",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Creative Labs", name: "Sound Blaster 16 Value (CT2770)", year: 1994, chip: "CT2502 ViBRA 16", compat: "AdLib, SB, SB16", links: {
+    wp: "https://en.wikipedia.org/wiki/Sound_Blaster_16",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Creative Labs", name: "Sound Blaster VIBRA 16S (CT2890)", year: 1994, chip: "CT2502 ViBRA 16S", compat: "AdLib, SB, SB16", links: {
+    wp: "https://en.wikipedia.org/wiki/Sound_Blaster_16",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Creative Labs", name: "Sound Blaster VIBRA 16S (CT2900)", year: 1995, chip: "CT2502 ViBRA 16S + OPL3", compat: "AdLib, SB, SB16", links: {
+    wp: "https://en.wikipedia.org/wiki/Sound_Blaster_16",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Creative Labs", name: "Sound Blaster 16 (CT2910)", year: 1994, chip: "CT2502 + Yamaha OPL3", compat: "AdLib, SB, SB16", links: {
+    wp: "https://en.wikipedia.org/wiki/Sound_Blaster_16",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/sb16.php#CT2910",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Creative Labs", name: "Sound Blaster VIBRA 16 (CT2940)", year: 1995, chip: "CT2502 ViBRA 16 + CQM or OPL3", compat: "AdLib, SB, SB16", links: {
+    wp: "https://en.wikipedia.org/wiki/Sound_Blaster_16",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/sb16.php#CT2940",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Creative Labs", name: "Sound Blaster 16 (CT2950)", year: 1995, chip: "CT2505 ViBRA 16XV + OPL3", compat: "AdLib, SB, SB16", links: {
+    wp: "https://en.wikipedia.org/wiki/Sound_Blaster_16",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/sb16.php",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Creative Labs", name: "Sound Blaster VIBRA 16C (CT2960)", year: 1995, chip: "CT2505 ViBRA 16C", compat: "AdLib, SB, SB16", links: {
+    wp: "https://en.wikipedia.org/wiki/Sound_Blaster_16",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Creative Labs", name: "Phone Blaster (CT3210)", year: 1994, chip: "ViBRA + modem", compat: "SB16 + modem", links: {
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Creative Labs", name: "Sound Blaster AWE32 Value (CT3630)", year: 1995, chip: "EMU8000 + OPL3", compat: "AdLib, SB16, GS MIDI", links: {
+    wp: "https://en.wikipedia.org/wiki/Sound_Blaster_AWE32",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/sbawe.php",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Creative Labs", name: "Sound Blaster 32 (CT3670)", year: 1995, chip: "EMU8000 lite + OPL3", compat: "AdLib, SB16, GM MIDI", links: {
+    wp: "https://en.wikipedia.org/wiki/Sound_Blaster_AWE32",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/sbawe.php",
+    kr: "https://www.karlsitretro.com/sound-blaster-32-review/"
+  }},
+  { mfr: "Creative Labs", name: "Sound Blaster AWE32 (CT3990)", year: 1995, chip: "EMU8000 + OPL3 + WaveBlaster", compat: "AdLib, SB16, GS MIDI", links: {
+    wp: "https://en.wikipedia.org/wiki/Sound_Blaster_AWE32",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Creative Labs", name: "Sound Blaster 16 (CT4130)", year: 1996, chip: "ViBRA 16XV + OPL3", compat: "AdLib, SB16", links: {
+    wp: "https://en.wikipedia.org/wiki/Sound_Blaster_16",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Creative Labs", name: "Sound Blaster 16 WavEffects (CT4170)", year: 1996, chip: "ViBRA 16 + WaveBlaster header", compat: "AdLib, SB16, GM MIDI", links: {
+    wp: "https://en.wikipedia.org/wiki/Sound_Blaster_16",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Creative Labs", name: "Sound Blaster AWE64 Gold (CT4390)", year: 1996, chip: "EMU8000 + OPL3 + 4MB ROM", compat: "AdLib, SB16, GS MIDI", links: {
+    wp: "https://en.wikipedia.org/wiki/Sound_Blaster_AWE64",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/sbawe64.php",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Creative Labs", name: "Sound Blaster AWE64 (CT4500)", year: 1996, chip: "EMU8000 + OPL3 + 1MB ROM", compat: "AdLib, SB16, GS MIDI", links: {
+    wp: "https://en.wikipedia.org/wiki/Sound_Blaster_AWE64",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/sbawe64.php",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Creative Labs", name: "Sound Blaster AWE64 (CT4520)", year: 1997, chip: "EMU8000 + OPL3", compat: "AdLib, SB16, GS MIDI", links: {
+    wp: "https://en.wikipedia.org/wiki/Sound_Blaster_AWE64",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+
+  // ── CRYSTAL / CIRRUS LOGIC ───────────────────────────────
+  { mfr: "Crystal / Cirrus Logic", name: "CS4236-KQ (generic card)", year: 1995, chip: "Crystal CS4236-KQ", compat: "AdLib, SB16, WSS", links: {
+    dd: "https://www.dosdays.co.uk/topics/fm_synthesizers.php#CS4236",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+
+  // ── DIAMOND MULTIMEDIA ───────────────────────────────────
+  { mfr: "Diamond Multimedia", name: "Monster Sound MX200 (ISA)", year: 1997, chip: "ESS ES1868 + QSound QS1000", compat: "SB16, WSS, QSound, GM MIDI", links: {
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/diamond.php",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+
+  // ── DIGIDESIGN ───────────────────────────────────────────
+  { mfr: "Digidesign", name: "Audiomedia III", year: 1993, chip: "Motorola 56001 DSP", compat: "Pro Tools (Mac/PC)", links: {
+    wp: "https://en.wikipedia.org/wiki/Digidesign",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/",
+    osd: "http://www.oldschooldaw.com/forums/index.php?topic=587.0"
+  }},
+  { mfr: "Digidesign", name: "Session 8 (ISA)", year: 1993, chip: "Motorola 56001 DSP", compat: "Pro Tools", links: {
+    osd: "http://www.oldschooldaw.com/forums/index.php?topic=587.0"
+  }},
+
+  // ── E-MU SYSTEMS ─────────────────────────────────────────
+  { mfr: "E-mu Systems", name: "8-Bit Sampling Card (EISA/ISA)", year: 1993, chip: "E-mu Proteus DSP", compat: "Pro MIDI/DAW", links: {
+    wp: "https://en.wikipedia.org/wiki/E-mu_Systems"
+  }},
+
+  // ── ENSONIQ ──────────────────────────────────────────────
+  { mfr: "Ensoniq", name: "Soundscape ELITE (VIVO-90DB-A)", year: 1994, chip: "Ensoniq OTTO + OPL3", compat: "AdLib, SB, WSS, GM MIDI", links: {
+    wp: "https://en.wikipedia.org/wiki/Ensoniq_Soundscape",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/ensoniq.php",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Ensoniq", name: "Soundscape S-2000", year: 1995, chip: "Ensoniq OTTO + OPL3", compat: "AdLib, SB, WSS, GM MIDI", links: {
+    wp: "https://en.wikipedia.org/wiki/Ensoniq_Soundscape",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/ensoniq.php",
+    kr: "https://www.karlsitretro.com/ensoniq-soundscape-s-2000-review/"
+  }},
+  { mfr: "Ensoniq", name: "V7-SPEA media fx", year: 1995, chip: "Ensoniq AudioPCI ES1370 (ISA variant)", compat: "SB16, GM MIDI", links: {
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+
+  // ── ESS TECHNOLOGY ───────────────────────────────────────
+  { mfr: "ESS Technology", name: "AudioDrive ES688 (generic OEM cards)", year: 1993, chip: "ESS ES688", compat: "AdLib, SB, SB Pro", links: {
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/ess.php"
+  }},
+  { mfr: "ESS Technology", name: "AudioDrive ES1688 (generic OEM cards)", year: 1994, chip: "ESS ES1688", compat: "AdLib, SB, SB16", links: {
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/ess.php"
+  }},
+  { mfr: "ESS Technology", name: "AudioDrive ES1868 (generic OEM cards)", year: 1995, chip: "ESS ES1868", compat: "AdLib, SB16, WSS", links: {
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/ess.php"
+  }},
+  { mfr: "ESS Technology", name: "AudioDrive ES1869 (generic OEM cards)", year: 1996, chip: "ESS ES1869 + OPL3", compat: "AdLib, SB16, WSS, OPL3", links: {
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/ess.php"
+  }},
+
+  // ── FARMOSA ──────────────────────────────────────────────
+  { mfr: "Farmosa", name: "MPB-000050", year: "", chip: "Unknown OEM", compat: "SB16", links: {
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Farmosa", name: "MPB-000074", year: "", chip: "Unknown OEM", compat: "SB16", links: {
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+
+  // ── GAINWARD ─────────────────────────────────────────────
+  { mfr: "Gainward", name: "Crystal CX4235", year: 1995, chip: "Crystal CS4235", compat: "AdLib, SB16, WSS", links: {
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+
+  // ── GALLANT ──────────────────────────────────────────────
+  { mfr: "Gallant / Zoltrix", name: "AV302 (SC-2 clone)", year: 1994, chip: "OPTi 82C929", compat: "AdLib, SB Pro, WSS", links: {
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+
+  // ── IBM ───────────────────────────────────────────────────
+  { mfr: "IBM", name: "Speech/Music Adapter (M-ACPA)", year: 1991, chip: "CS4231 + Crystal CODEC", compat: "WSS, MIDI", links: {
+    vg: "https://www.vogons.org/viewtopic.php?t=39755"
+  }},
+
+  // ── INNOVATION ───────────────────────────────────────────
+  { mfr: "Innovation / Votrax", name: "SSI-2001 (SID card)", year: 1989, chip: "MOS 6581 SID", compat: "SSI-2001 standard", links: {
+    vg: "https://www.vogons.org/viewtopic.php?t=27485",
+    vgw: "https://www.vogons.org/wiki/Innovation_SSI-2001"
+  }},
+
+  // ── KAWAI ────────────────────────────────────────────────
+  { mfr: "Kawai", name: "CCP-014", year: 1993, chip: "Kawai GMeg wavetable", compat: "GM MIDI, WaveBlaster", links: {
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+
+  // ── LABWAY ───────────────────────────────────────────────
+  { mfr: "Labway", name: "ESS ES1868F + AdMOS QS700", year: 1996, chip: "ESS ES1868F + QSound QS700", compat: "SB16, WSS, GM MIDI", links: {
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Labway", name: "ESS ES1868F + AdMOS QS1000", year: 1996, chip: "ESS ES1868F + QSound QS1000", compat: "SB16, WSS, GM MIDI", links: {
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Labway", name: "Yamaha YMF716B-S", year: 1997, chip: "Yamaha YMF716B-S (OPL3-SA2)", compat: "AdLib, SB16, WSS, GM MIDI", links: {
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Labway", name: "Yamaha YMF716E-S + AdMOS QS1000 (A151-A00)", year: 1997, chip: "Yamaha OPL3-SA3 + QS1000", compat: "AdLib, SB16, WSS, GM MIDI", links: {
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+
+  // ── MEDIAFORTE ───────────────────────────────────────────
+  { mfr: "MediaForte", name: "SF16-FMD-02", year: 1994, chip: "OPL3 + FM codec", compat: "AdLib, SB16", links: {
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "MediaForte", name: "SF16-FMD2-13", year: 1995, chip: "OPL3 + SB16 codec", compat: "AdLib, SB16", links: {
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "MediaForte", name: "SF16-FMI-03", year: 1995, chip: "OPL3 + ISA codec", compat: "AdLib, SB16", links: {
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "MediaForte", name: "VIBRA-16-02", year: 1995, chip: "Creative ViBRA 16", compat: "AdLib, SB16", links: {
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+
+  // ── MEDIA VISION ─────────────────────────────────────────
+  { mfr: "Media Vision", name: "Thunderboard", year: 1990, chip: "OPL2 + 8-bit DSP", compat: "AdLib, SB", links: {
+    wp: "https://en.wikipedia.org/wiki/Media_Vision_Technology",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/mediavision.php"
+  }},
+  { mfr: "Media Vision", name: "Pro AudioSpectrum 8", year: 1990, chip: "OPL2 + 8-bit DSP", compat: "AdLib, SB", links: {
+    wp: "https://en.wikipedia.org/wiki/Pro_AudioSpectrum",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/mediavision.php"
+  }},
+  { mfr: "Media Vision", name: "Pro AudioSpectrum Plus", year: 1991, chip: "OPL2 + 16-bit DSP", compat: "AdLib, SB, PAS", links: {
+    wp: "https://en.wikipedia.org/wiki/Pro_AudioSpectrum",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/mediavision.php"
+  }},
+  { mfr: "Media Vision", name: "Pro AudioSpectrum 16", year: 1992, chip: "Yamaha YMF262 (OPL3) + 16-bit DSP", compat: "AdLib, SB, PAS16", links: {
+    wp: "https://en.wikipedia.org/wiki/Pro_AudioSpectrum",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/mediavision.php",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Media Vision", name: "Pro AudioSpectrum Plus 16 SCSI", year: 1992, chip: "OPL3 + 16-bit DSP + SCSI", compat: "AdLib, SB, PAS16", links: {
+    wp: "https://en.wikipedia.org/wiki/Pro_AudioSpectrum",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/mediavision.php"
+  }},
+  { mfr: "Media Vision", name: "Jazz 16", year: 1992, chip: "16-bit codec (Jazz chipset)", compat: "AdLib, SB, WSS", links: {
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/mediavision.php"
+  }},
+
+  // ── MICROSOFT ────────────────────────────────────────────
+  { mfr: "Microsoft", name: "Windows Sound System", year: 1992, chip: "Crystal CS4231A", compat: "WSS (Windows Sound System)", links: {
+    wp: "https://en.wikipedia.org/wiki/Windows_Sound_System",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/microsoft_wss.php",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+
+  // ── MIRO ─────────────────────────────────────────────────
+  { mfr: "miro", name: "miroSOUND PCM1 PRO", year: 1994, chip: "Analog Devices codec + 20-bit DAC", compat: "Pro audio, MIDI", links: {
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "miro", name: "miroSOUND PCM10", year: 1995, chip: "AD1848 + OPL3", compat: "WSS, OPL3", links: {
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "miro", name: "miroConnect 34 (Mwave)", year: 1994, chip: "IBM Mwave DSP", compat: "Mwave (modem + audio)", links: {
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+
+  // ── NEC ──────────────────────────────────────────────────
+  { mfr: "NEC", name: "XR385", year: 1994, chip: "OPTi 82C931", compat: "AdLib, SB16, WSS", links: {
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+
+  // ── OAK TECHNOLOGY ───────────────────────────────────────
+  { mfr: "Oak Technology", name: "Mozart Wave Table", year: 1994, chip: "OTI-611 + wavetable", compat: "AdLib, SB, GM MIDI", links: {
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+
+  // ── ORCHID TECHNOLOGY ────────────────────────────────────
+  { mfr: "Orchid Technology", name: "Soundwave 32", year: 1993, chip: "Turtle Beach Maui chipset", compat: "AdLib, SB, GM MIDI", links: {
+    vg: "https://www.vogons.org/viewtopic.php?t=32894"
+  }},
+
+  // ── ROLAND ───────────────────────────────────────────────
+  { mfr: "Roland", name: "MPU-401 + MIF-IPC-A (ISA MIDI interface)", year: 1984, chip: "Intel 8031 + Roland MPU-401", compat: "MIDI (MPU-401 intelligent/UART)", links: {
+    wp: "https://en.wikipedia.org/wiki/Roland_MPU-401",
+    dd: "https://www.dosdays.co.uk/topics/MIDI_sound.php",
+    osd: "http://www.oldschooldaw.com/forums/index.php?topic=1367.0"
+  }},
+  { mfr: "Roland", name: "LAPC-I", year: 1988, chip: "Roland LA synthesis (MT-32 on card)", compat: "Roland MT-32 compatible", links: {
+    wp: "https://en.wikipedia.org/wiki/Roland_LAPC-I",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/roland.php",
+    vg: "https://www.vogons.org/viewtopic.php?t=36428"
+  }},
+  { mfr: "Roland", name: "SCC-1 GS Sound Card", year: 1991, chip: "Roland GS synthesis (SC-55 on card)", compat: "Roland GS, General MIDI", links: {
+    wp: "https://en.wikipedia.org/wiki/Roland_SCC-1",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/roland.php",
+    osd: "http://www.oldschooldaw.com/forums/index.php?topic=1367.0"
+  }},
+  { mfr: "Roland", name: "RAP-10 (Roland Audio Producer)", year: 1993, chip: "Roland SA synthesis + 16-bit audio", compat: "GM MIDI, Pro audio", links: {
+    kr: "https://www.karlsitretro.com/roland-rap-10-review/",
+    osd: "http://www.oldschooldaw.com/forums/index.php?board=333.0"
+  }},
+
+  // ── SOUND IMAGE SYMPHONIC ────────────────────────────────
+  { mfr: "Sound Image Symphonic", name: "Reveal K2Y-PRO16", year: 1994, chip: "Reveal/OPL3 chipset", compat: "AdLib, SB16", links: {
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+
+  // ── TERRATEC ─────────────────────────────────────────────
+  { mfr: "Terratec", name: "Base-1", year: 1993, chip: "Yamaha OPL3 codec", compat: "AdLib, SB, OPL3", links: {
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/terratec.php",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Terratec", name: "Gold 16/96", year: 1994, chip: "Crystal CS4231 + OPL3", compat: "AdLib, SB16, WSS", links: {
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/terratec.php",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Terratec", name: "Maestro 16", year: 1994, chip: "OPTi 82C929 + OPL3", compat: "AdLib, SB16, WSS", links: {
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/terratec.php",
+    kr: "https://www.karlsitretro.com/terratec-maestro-16-review/"
+  }},
+  { mfr: "Terratec", name: "Maestro 32/96", year: 1995, chip: "AD1848 + OPL3 + WaveBlaster", compat: "AdLib, SB16, WSS, GM MIDI", links: {
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/terratec.php",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Terratec", name: "SOWT-11", year: 1995, chip: "Unknown codec", compat: "SB16, WSS", links: {
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+
+  // ── TURTLE BEACH ─────────────────────────────────────────
+  { mfr: "Turtle Beach", name: "Multisound (original)", year: 1992, chip: "CS4215 CODEC + Proteus/1 ROM", compat: "Pro audio, GM MIDI", links: {
+    wp: "https://en.wikipedia.org/wiki/Turtle_Beach_Systems",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/turtlebeach.php"
+  }},
+  { mfr: "Turtle Beach", name: "Multisound Tahiti", year: 1993, chip: "CS4215 + ICS Wavefront", compat: "Pro audio, GM MIDI", links: {
+    wp: "https://en.wikipedia.org/wiki/Turtle_Beach_Systems",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/turtlebeach.php",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Turtle Beach", name: "Multisound Monterey", year: 1993, chip: "ICS Wavefront + OPL3", compat: "AdLib, SB, GM MIDI", links: {
+    wp: "https://en.wikipedia.org/wiki/Turtle_Beach_Systems",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/turtlebeach.php",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Turtle Beach", name: "Maui", year: 1993, chip: "ICS Wavefront WaveFront", compat: "GM MIDI, WaveBlaster", links: {
+    wp: "https://en.wikipedia.org/wiki/Turtle_Beach_Systems",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/turtlebeach.php"
+  }},
+  { mfr: "Turtle Beach", name: "Multisound Fiji", year: 1994, chip: "ICS Wavefront + OPL3 + SPDIF", compat: "AdLib, SB, GM MIDI", links: {
+    wp: "https://en.wikipedia.org/wiki/Turtle_Beach_Systems",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/turtlebeach.php"
+  }},
+  { mfr: "Turtle Beach", name: "Multisound Pinnacle", year: 1994, chip: "ICS Wavefront + OPL3 + S/PDIF", compat: "AdLib, SB, GM MIDI", links: {
+    wp: "https://en.wikipedia.org/wiki/Turtle_Beach_Systems",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/turtlebeach.php",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Turtle Beach", name: "Tropez", year: 1994, chip: "ICS Wavefront + OPL3", compat: "AdLib, SB16, GM MIDI", links: {
+    wp: "https://en.wikipedia.org/wiki/Turtle_Beach_Systems",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/turtlebeach.php"
+  }},
+  { mfr: "Turtle Beach", name: "Tropez Plus", year: 1995, chip: "ICS Wavefront + OPL3 + S/PDIF", compat: "AdLib, SB16, GM MIDI", links: {
+    wp: "https://en.wikipedia.org/wiki/Turtle_Beach_Systems",
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/turtlebeach.php"
+  }},
+  { mfr: "Turtle Beach", name: "Rio", year: 1995, chip: "Analog Devices CODEC", compat: "WSS, SB16", links: {
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Turtle Beach", name: "TBS-2000 (Monterey 64)", year: 1996, chip: "Crystal CS4232 + ICS Wavefront", compat: "AdLib, SB16, WSS, GM MIDI", links: {
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/turtlebeach.php"
+  }},
+
+  // ── YAMAHA ───────────────────────────────────────────────
+  { mfr: "Yamaha", name: "SW1000XG", year: 1997, chip: "Yamaha XG (128-voice wavetable)", compat: "XG MIDI, GM MIDI, pro audio", links: {
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/yamaha.php",
+    kr: "https://www.karlsitretro.com/yamaha-sw1000xg-review/",
+    osd: "http://www.oldschooldaw.com/forums/index.php?board=333.0"
+  }},
+  { mfr: "Yamaha", name: "DB50XG (WaveBlaster daughter card)", year: 1994, chip: "Yamaha XG wavetable", compat: "XG MIDI, GM MIDI", links: {
+    dd: "https://www.dosdays.co.uk/topics/Manufacturers/yamaha.php",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Yamaha", name: "PLG100-VH (XG plug-in)", year: 1999, chip: "Yamaha PLG vocoder", compat: "XG / SW1000XG plugin", links: {
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "Yamaha", name: "PLG150-VL (XG plug-in)", year: 1999, chip: "Yamaha PLG virtual acoustic", compat: "XG / SW1000XG plugin", links: {
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+
+  // ── ZEFIRO ACOUSTICS ─────────────────────────────────────
+  { mfr: "Zefiro Acoustics", name: "ZA2", year: 1995, chip: "Analog Devices AD1847 CODEC", compat: "WSS, Pro audio 20-bit", links: {
+    vg: "https://www.vogons.org/viewtopic.php?t=19327",
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+
+  // ── OEM / GENERIC ────────────────────────────────────────
+  { mfr: "OEM / Generic", name: "Yamaha YMF715E-S (various OEM brands)", year: 1997, chip: "Yamaha OPL3-SA (YMF715)", compat: "AdLib, SB16, WSS, GM MIDI", links: {
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "OEM / Generic", name: "SoundPro HT1869V+", year: 1997, chip: "HT1869V+ (SB16 clone)", compat: "AdLib, SB16", links: {
+    kr: "https://www.karlsitretro.com/soundpro-ht1869v-review/"
+  }},
+  { mfr: "OEM / Generic", name: "QS-833 OPTi 82C929A (unbranded)", year: 1993, chip: "OPTi 82C929A", compat: "AdLib, SB Pro, WSS", links: {
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "OEM / Generic", name: "OPTi 82C931 + 82C941 (unbranded)", year: 1995, chip: "OPTi 82C931 + wavetable header", compat: "AdLib, SB16, WSS", links: {
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "OEM / Generic", name: "DXLSK81 (unbranded)", year: "", chip: "Unknown", compat: "SB16 clone", links: {
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "OEM / Generic", name: "ViBRA 16S (unbranded)", year: "", chip: "Creative ViBRA 16S (CT2502?)", compat: "SB16", links: {
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "OEM / Generic", name: "Behavior Tech Computer E5X1853L", year: 1995, chip: "ESS ESS1868", compat: "AdLib, SB16", links: {
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+  { mfr: "OEM / Generic", name: "Cadaces CDV0-1 A041-760", year: "", chip: "Unknown", compat: "SB16 clone", links: {
+    kr: "https://www.karlsitretro.com/isa-sound-card-museum/"
+  }},
+
+];
+
+// ─────────────────────────────────────────────────────────
+// Build manufacturer list and populate filter
+// ─────────────────────────────────────────────────────────
+const mfrs = [...new Set(CARDS.map(c => c.mfr))].sort();
+const mfrFilter = document.getElementById('mfr-filter');
+mfrs.forEach(m => {
+  const opt = document.createElement('option');
+  opt.value = m;
+  opt.textContent = m;
+  mfrFilter.appendChild(opt);
+});
+
+// ─────────────────────────────────────────────────────────
+// Badge rendering
+// ─────────────────────────────────────────────────────────
+function renderLinks(links) {
+  const defs = {
+    wp:  ['WP', 'badge-wp', 'Wikipedia'],
+    vg:  ['VG', 'badge-vg', 'VOGONS Forum'],
+    vgw: ['VGW', 'badge-vgw', 'VOGONS Wiki'],
+    dd:  ['DD', 'badge-dd', 'DOS Days'],
+    kr:  ['KR', 'badge-kr', "Karl's IT Retro"],
+    osd: ['OSD', 'badge-osd', 'OldSchoolDAW'],
+  };
+  return Object.entries(links)
+    .map(([k, url]) => {
+      const [label, cls, title] = defs[k] || [k, '', k];
+      return `<a class="badge ${cls}" href="${url}" target="_blank" title="${title}">${label}</a>`;
+    }).join('');
+}
+
+// ─────────────────────────────────────────────────────────
+// Era helper
+// ─────────────────────────────────────────────────────────
+function getEra(year) {
+  if (!year) return 'unknown';
+  if (year <= 1991) return 'early';
+  if (year <= 1995) return 'mid';
+  return 'late';
+}
+
+// ─────────────────────────────────────────────────────────
+// Render all manufacturer sections
+// ─────────────────────────────────────────────────────────
+function render(filter = '', mfrSel = '', eraSel = '') {
+  const main = document.getElementById('main-content');
+  const noRes = document.getElementById('no-results');
+  const lc = filter.toLowerCase();
+
+  let totalVisible = 0;
+
+  // Clear all sections
+  main.querySelectorAll('.manufacturer-section').forEach(el => el.remove());
+
+  // Group filtered cards by manufacturer
+  const grouped = {};
+  CARDS.forEach(card => {
+    const matchText = !lc || [card.name, card.mfr, card.chip, card.compat].some(f => f.toLowerCase().includes(lc));
+    const matchMfr = !mfrSel || card.mfr === mfrSel;
+    const matchEra = !eraSel || getEra(card.year) === eraSel;
+    if (matchText && matchMfr && matchEra) {
+      (grouped[card.mfr] = grouped[card.mfr] || []).push(card);
+      totalVisible++;
+    }
+  });
+
+  document.getElementById('visible-count').textContent = totalVisible;
+  noRes.style.display = totalVisible === 0 ? 'block' : 'none';
+
+  Object.entries(grouped).sort(([a],[b]) => a.localeCompare(b)).forEach(([mfr, cards], i) => {
+    const sec = document.createElement('div');
+    sec.className = 'manufacturer-section';
+    sec.style.animationDelay = (i * 0.04) + 's';
+
+    const rows = cards.map(card => `
+      <tr>
+        <td class="card-name">${card.name}</td>
+        <td class="card-year">${card.year || '—'}</td>
+        <td class="card-chip">${card.chip}</td>
+        <td class="card-compat">${card.compat}</td>
+        <td class="card-links">${renderLinks(card.links)}</td>
+      </tr>
+    `).join('');
+
+    sec.innerHTML = `
+      <div class="mfr-header">
+        <span class="mfr-name">${mfr}</span>
+        <span class="mfr-count">(${cards.length} card${cards.length > 1 ? 's' : ''})</span>
+      </div>
+      <table class="card-table">
+        <tbody>${rows}</tbody>
+      </table>
+    `;
+    main.appendChild(sec);
+  });
+}
+
+// ─────────────────────────────────────────────────────────
+// Event listeners
+// ─────────────────────────────────────────────────────────
+let debounce;
+document.getElementById('search').addEventListener('input', e => {
+  clearTimeout(debounce);
+  debounce = setTimeout(() => render(e.target.value, mfrFilter.value, document.getElementById('era-filter').value), 150);
+});
+mfrFilter.addEventListener('change', () => render(document.getElementById('search').value, mfrFilter.value, document.getElementById('era-filter').value));
+document.getElementById('era-filter').addEventListener('change', () => render(document.getElementById('search').value, mfrFilter.value, document.getElementById('era-filter').value));
+
+// Initial render
+render();
+</script>
+</body>
+</html>
